@@ -1,0 +1,165 @@
+\PassOptionsToPackage{usenames,dvipsnames}{color}
+\documentclass[11pt]{beamer}
+\usetheme{Copenhagen}
+\usepackage[utf8x]{inputenc}
+\usepackage{color}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+%\usepackage{changepage}
+%\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{geometry}
+%\usepackage{forloop}
+\usepackage{pgffor}
+%\usepackage{beamerthemesplit}
+%\usepackage{comment}
+%\usepackage[outdir=./]{epstopdf}
+\usepackage{epstopdf}
+%\usepackage{wrapfig}
+%\usepackage{xintexpr}
+%\usepackage[export]{adjustbox}
+%\usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter}
+%\date{} 
+%\subject{}
+\usepackage{multicol}
+\usepackage{hyperref}
+\setbeamertemplate{navigation symbols}{}
+\useoutertheme{infolines}
+
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\rulesep}{\unskip\ \vrule\ }
+\newcommand{\backupbegin}{
+	\newcounter{finalframe}
+	\setcounter{finalframe}{\value{framenumber}}
+}
+
+
+%\newcommand{\febs}{193, 87, 88, 85, 80, 81, 79, 89}
+\usepackage{pdftexcmds}
+\makeatletter
+%\newcommand\pdfstrcmp[2] {\pdf@strcmp{#1}{#2}}
+\newcommand{\group}{""}
+\newcommand{\plot}{""}
+
+
+\newenvironment{changemargin}[2]{% 
+\begin{list}{}{% 
+\setlength{\topsep}{0pt}% 
+\setlength{\leftmargin}{#1}% 
+\setlength{\rightmargin}{#2}% 
+\setlength{\listparindent}{\parindent}% 
+\setlength{\itemindent}{\parindent}% 
+\setlength{\parsep}{\parskip}% 
+}% 
+\item[]}{\end{list}} 
+
+\makeatletter
+\newenvironment{withoutheadline}{
+\setbeamertemplate{headline}[default]%evidently this only works for individual frames
+\def\beamer@entrycode{\vspace*{-\headheight}}
+}{}
+\makeatother
+
+\makeatletter
+\def\instring#1#2{TT\fi\begingroup
+\edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+\makeatother
+
+\setbeamertemplate{headline}
+{
+}
+
+\input{RunsAndFEBIDs.tex}
+
+\begin{document}
+
+
+%\graphicspath{.}
+%\epstopdfsetup{outdir=./}
+
+%\newcommand\runs}{
+\begin{frame}
+	\begin{multicols}{3}
+        \tableofcontents
+    \end{multicols}
+\end{frame}
+
+
+
+\section{Pedestals}
+\begin{frame}{Pedestals by run}
+\foreach \feb in \febs{
+%\foreach \feb in {193, 87, 88, 85, 80, 81, 79, 89}{ 
+         \centering
+         \includegraphics[width=0.24\linewidth]{../Averages_Runs_\runstr/pedestals_feb\feb.png}%
+}
+\end{frame}
+
+\foreach \run in \runs{
+
+         \begin{frame}{Run \run -- All Pedestal ADC \& RMS}
+         \centering
+         \includegraphics[width=0.49\linewidth]{../run\run/pedestal_FEBvChan.png}%
+         \includegraphics[width=0.49\linewidth]{../run\run/rms_pedestal_FEBvChan.png}
+         \end{frame}
+ }
+
+\foreach \run in \runs{
+	         \section{ADCs Run \run}
+ 	\begin{frame}
+ 		\huge{ADC distributions/Module/Channel}\\
+ 		\normalsize{Flag 3 with channels triggering the readout selected}
+ 	\end{frame}
+	
+	\foreach \feb in \febs{
+                 \subsection{FEB \feb}
+ 		\begin{frame}{Run \run -- Module \feb }
+ 			\centering
+ 			\foreach \chan in {0, 1, ..., 14}{
+ 				\includegraphics[width=0.19\linewidth]{../run\run/adcDists/adcs_module\feb_chan\chan}%
+ 			}
+ 		\end{frame}
+ 		\begin{frame}{Run \run -- Module \feb }
+ 			\centering
+ 			\foreach \chan in {15, 16, ..., 31}{
+ 				%\includegraphics[width=0.19\linewidth]{\run/adc_feb\feb_chan\chan}%
+ 				\includegraphics[width=0.19\linewidth]{../run\run/adcDists/adcs_module\feb_chan\chan}%
+ 			}
+ 		\end{frame}
+ 	}
+
+}         
+%can uncomment the rest of this if we want to add in the chanel by channel adc distributions.
+%
+\begin{frame}
+\huge{Pedestal distrubtions/channel/run}
+\end{frame}
+\foreach \run in \runs{
+     \foreach \feb in \febs{
+        \begin{frame}{Pedestals Run \run~FEB \feb }
+         \centering
+         \foreach \chan in {0, 1, ..., 14}{
+                  \includegraphics[width=0.19\linewidth]{../run\run/ped_adc_plots/adc_feb\feb_chan\chan_pedestals}%
+         }                 
+         \end{frame}
+         \begin{frame}{FEB \feb }
+         \centering
+         \foreach \chan in {15, 16, ..., 31}{
+                  %\includegraphics[width=0.19\linewidth]{\run/adc_feb\feb_chan\chan}%
+                \includegraphics[height=0.2\textheight]{../run\run/ped_adc_plots/adc_feb\feb_chan\chan_pedestals}%
+         }
+         \end{frame}
+    }        
+}   
+
+
+
+
+
+
+\end{document}
