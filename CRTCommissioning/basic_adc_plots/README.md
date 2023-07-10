@@ -1,4 +1,4 @@
-#Basic ADC Distrubtion Plots
+# Basic ADC Distrubtion Plots
 
 Directory for plots of pedestals and ADC distributions for triggered events. Can be run over small data samples to look for dead channels, odd behaviors etc. 
 
