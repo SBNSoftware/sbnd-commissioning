@@ -1,0 +1,144 @@
+\PassOptionsToPackage{usenames,dvipsnames}{color}
+\documentclass[11pt]{beamer}
+\usetheme{Copenhagen}
+\usepackage[utf8x]{inputenc}
+\usepackage{color}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+%\usepackage{changepage}
+%\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{geometry}
+%\usepackage{forloop}
+\usepackage{pgffor}
+%\usepackage{beamerthemesplit}
+%\usepackage{comment}
+%\usepackage[outdir=./]{epstopdf}
+\usepackage{epstopdf}
+%\usepackage{wrapfig}
+%\usepackage{xintexpr}
+%\usepackage[export]{adjustbox}
+%\usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter}
+%\date{} 
+%\subject{}
+\usepackage{multicol}
+\usepackage{hyperref}
+\setbeamertemplate{navigation symbols}{}
+\useoutertheme{infolines}
+
+%\usepackage{verbatim}
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\rulesep}{\unskip\ \vrule\ }
+\newcommand{\backupbegin}{
+	\newcounter{finalframe}
+	\setcounter{finalframe}{\value{framenumber}}
+}
+
+
+\usepackage{pdftexcmds}
+\makeatletter
+%\newcommand\pdfstrcmp[2] {\pdf@strcmp{#1}{#2}}
+\newcommand{\group}{""}
+\newcommand{\plot}{""}
+
+
+\newenvironment{changemargin}[2]{% 
+\begin{list}{}{% 
+\setlength{\topsep}{0pt}% 
+\setlength{\leftmargin}{#1}% 
+\setlength{\rightmargin}{#2}% 
+\setlength{\listparindent}{\parindent}% 
+\setlength{\itemindent}{\parindent}% 
+\setlength{\parsep}{\parskip}% 
+}% 
+\item[]}{\end{list}} 
+
+\makeatletter
+\newenvironment{withoutheadline}{
+\setbeamertemplate{headline}[default]
+\def\beamer@entrycode{\vspace*{-\headheight}}
+}{}
+\makeatother
+
+\makeatletter
+\def\instring#1#2{TT\fi\begingroup
+\edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+\makeatother
+
+\setbeamertemplate{headline}
+{
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%OK SO HERE'S THE ACTUAL IMPORTANT STUFF
+
+\input{latex/NewRunsAndFEBIDs.tex} %IMPORTS THE RUN NUMBER, FEB IDs AND FLAG NUMBERS FROM THE NewRunsAndFEBIDs.tex FILE THAT Details.py OUTPUTTED INTO
+
+\begin{document}
+	%PASTES FLAG DISTRIBUTIONS, HITS PER EVENT AND FLAG 7/11 FEB OCCUPANCY PLOTS
+	\begin{frame}{Run \run\ -- Flag Distributions}
+		\centering
+       	\includegraphics[width=0.4\linewidth]{plots/run\run/flag_distribution_\run.jpeg}
+		\includegraphics[width=0.4\linewidth]{plots/run\run/hits_per_event_\run}
+		\\
+		\includegraphics[width=0.4\linewidth]{plots/run\run/FEB_Occupancy_flag7_TS1_\run.jpeg}
+		\includegraphics[width=0.4\linewidth]{plots/run\run/FEB_Occupancy_flag11_TS0_\run.jpeg}
+	\end{frame}
+	
+	%CYCLES THROUGH FLAGS AND PASTES FLAG HIT DISTIRBUTION PLOTS
+	\begin{frame}{Run \run\ -- Hit Distributions}
+       	\centering
+		\foreach \flag in \flags{
+			\includegraphics[height=0.45\textheight]{plots/run\run/hit_distribution_flag\flag_\run.jpeg}
+        }
+	\end{frame}
+
+         
+	%CYCLES THROUGH FEBS AND PASTES EACH FEB'S FLAG 3 TS0 TIMESTAMP HISTOGRAMS AND AVERAGE TS0 TIMESTAMP HISTOGRAM
+	\begin{frame}{Run \run\ -- Flag 3 TS0 Timestamp Distributions}
+   		\centering
+   		\includegraphics[width=0.4\linewidth]{plots/run\run/average_ts0_flag3_\run.jpeg}
+		\foreach \feb in \febs{
+			\includegraphics[width=0.3\linewidth]{plots/run\run/FEB\feb_flag3_ts0_\run.jpeg}
+		}
+	\end{frame}
+
+	%DITTO BUT FOR TS1 INSTEAD OF TS0
+	\begin{frame}{Run \run\ -- Flag 3 TS1 Timestamp Distributions}	
+		\centering
+		\includegraphics[width=0.4\linewidth]{plots/run\run/average_ts1_flag3_\run.jpeg}
+		\foreach \feb in \febs{
+			\includegraphics[width=0.3\linewidth]{plots/run\run/FEB\feb_flag3_ts1_\run.jpeg}
+		}
+	\end{frame}
+
+	%CYCLES THROUGH FEBS AND PASTES FLAG 7 TS0 HISTOGRAMS (SUBTRACTING T0 RESET WINDOW)
+	\begin{frame}{Run \run -- Flag 7 TS0 Histograms}
+		\centering
+		\foreach \feb in \febs{
+			\includegraphics[width=0.3\linewidth]{plots/run\run/FEB\feb_flag7_TS0_\run.jpeg}
+		}
+	\end{frame}
+
+	%DITTO BUT FOR TS1 INSTEAD OF TS0 (SUBTRACTING T1 RESET WINDOW)
+	\begin{frame}{Run \run -- Flag 11 TS1 Histograms}
+		\centering
+		\foreach \feb in \febs{
+			\includegraphics[width=0.3\linewidth]{plots/run\run/FEB\feb_flag11_TS1_\run.jpeg}
+		}
+	\end{frame}
+
+	%CYCLES THROUGH FEBS AND PASTES FLAG 3 HITS PER SiPM CHANNEL (0-31)
+	\begin{frame}{Run \run -- SiPM Strip Flag 3 Hits}
+		\centering
+		\foreach \feb in \febs{
+			\includegraphics[width=0.3\linewidth]{plots/run\run/FEB\feb_channel_hits_\run.jpeg}
+		}
+	\end{frame}
+
+\end{document}
