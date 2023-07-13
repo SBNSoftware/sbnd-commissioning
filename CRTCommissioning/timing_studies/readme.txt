@@ -1,7 +1,7 @@
 Before running any scripts:
-1. Set up a python virtual environment (https://docs.python.org/3/library/venv.html)
-2. Create a directory of artroot files (raw CRT data put through an analysis fcl) called "runs" that the script calls from to read in the run files
-3. Have not a little, not a small amount, but a whole lotta fun :)
+1. Source the usual larsoft setup scripts (https://cdcvs.fnal.gov/redmine/projects/larsoft/wiki/Quick-start_guide_to_using_and_developing_LArSoft_code)
+1. Set up a python virtual environment in your working directory (https://docs.python.org/3/library/venv.html)
+2. Create a directory of artroot files (raw CRT data put through an analysis fcl) called "runs" that the script calls from to read in the run files, then fill it with run root files to analyse.
 
 ----------------------------------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ Strip_Channel_Plots.py - Plots the channel breakdown of flag 3 hits for each FEB
 
 Details.py - Prints the important details of the run such as total number of events/hits, number of events/hits by flag breakdown, number of FEBs, runtime, lostcpu/lostfpga/losthits and density of flag 7/11 hits successful. Also adds FEB IDs, flag numbers and the run number to the Latex file.
 
-latex - Directory containing latex script CRTPlotDump.tex that take all plots produced by aforementioned scripts and dumps them into a latex presentation named CRTPlotDump<run_number>.pdf.
+latex - Directory containing latex script TimingPlotDump.tex that take all plots produced by aforementioned scripts and dumps them into a latex presentation named TimingPlotDump<run_number>.pdf.
 
 ----------------------------------------------------------------------------------------------------
 

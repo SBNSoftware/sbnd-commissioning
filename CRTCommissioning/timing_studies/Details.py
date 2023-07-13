@@ -107,13 +107,13 @@ flag_list_str = flag_list_str[:-1] #REMOVES THE FINAL COMMA BECAUSE I'M BAD AT C
 feb_list_str = ''.join(str(b) + "," for b in feb_list) #SAME BUT FOR FEB NUMBERS
 feb_list_str = feb_list_str[:-1] #SAME SAME
 
-#WRITES THE LIST OF FLAGS, FEBS AND RUN NUMBERS IN THE NewRunsAndFEBIDs.tex FILE TO BE READ INTO CRTPlotDump.tex SO PARAMETERS ARE AUTOMATICALLY UPDATED WITH EACH RUN
-RunParameters = {'flaglisthere':flag_list_str, 'feblisthere':feb_list_str, 'runnumberhere':runname}
-with open('latex/RunsAndFEBIDs.tex', 'r') as myfile:
+#WRITES THE LIST OF FLAGS, FEBS AND RUN NUMBERS IN THE NewRunParameters.tex FILE TO BE READ INTO TimingPlotDump.tex SO PARAMETERS ARE AUTOMATICALLY UPDATED WITH EACH RUN
+Parameters = {'flaglisthere':flag_list_str, 'feblisthere':feb_list_str, 'runnumberhere':runname}
+with open('latex/RunParameters.tex', 'r') as myfile:
 	text = myfile.read()
-	for key, value in RunParameters.items():
+	for key, value in Parameters.items():
 		text = text.replace(key, str(value))
-	with open('latex/NewRunsAndFEBIDs.tex', 'w') as output:
+	with open('latex/NewRunParameters.tex', 'w') as output:
 		output.write(text)
 
 myfile.close()
