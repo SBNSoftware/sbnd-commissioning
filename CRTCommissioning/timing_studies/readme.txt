@@ -1,7 +1,7 @@
 Before running any scripts:
 1. Source the usual larsoft setup scripts (https://cdcvs.fnal.gov/redmine/projects/larsoft/wiki/Quick-start_guide_to_using_and_developing_LArSoft_code)
-1. Set up a python virtual environment in your working directory (https://docs.python.org/3/library/venv.html)
-2. Create a directory of artroot files (raw CRT data put through an analysis fcl) called "runs" that the script calls from to read in the run files, then fill it with run root files to analyse.
+2. Set up a python virtual environment in your working directory (https://docs.python.org/3/library/venv.html)
+3. Create a directory of artroot files (raw CRT data put through an analysis fcl) called "runs" that the script calls from to read in the run files, then fill it with run root files to analyse.
 
 ----------------------------------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ pdflatex <script_name>.tex
 
 ----------------------------------------------------------------------------------------------------
 
-Script breakdown:
+File/directory breakdown:
 Run_All_Scripts.sh - Bash script running each python script in the order outlined below. It has 1 argument which is the number of the run you are compiling.
 To run a specific run, type the command 'source Run_All_Scripts.sh <run number>'
 
