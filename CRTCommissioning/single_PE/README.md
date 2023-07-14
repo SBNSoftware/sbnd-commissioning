@@ -58,6 +58,8 @@ Things you might consider changeing:
 
 
 ======================================================
+
+
 **From this upon, I am going to use the dir `home/nfs/sbnd/Aframe/single_PE_search` as an example, I would suggest you to start a fresh new directory for your analysis.**
 ## How to take data 
 - Launch into the sbnd daq machine. 
