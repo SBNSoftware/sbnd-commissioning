@@ -2,6 +2,10 @@
 
 # the script for single PE search data taking for A-frame, each run is about 2 hours. 
 
+# copy all files are used before this data taking.
+cp configs/standard/crt01.fcl configs/standard/aframe_singlePE_voltage_scanning/crt01.fcl.copy 
+cp configs/standard/crt_aframePULL.fcl configs/standard/aframe_singlePE_voltage_scanning/crt_aframePULL.fcl.copy 
+
 # enlarge the PULL window. 
 cp configs/standard/aframe_singlePE_voltage_scanning/crt01PULL_singlePE.fcl configs/standard/crt_aframePULL.fcl
 

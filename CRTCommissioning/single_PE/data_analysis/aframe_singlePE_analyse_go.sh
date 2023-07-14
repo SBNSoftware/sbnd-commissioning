@@ -5,12 +5,12 @@
 Run_numbers=(6127 6137 6155 6156) #example here
 #  ====================== END OF USERS TO-DO ====================== 
 
-# ====================== USERS TO-CHECK ====================== 
-TARGET_bias_setting=180. # calculated based on Rohan's average triggered bias voltage. 
-TARGET_eff_gain=60.
-# Things below should not require any major changes....
-n=5 # number of bias voltages.
-Voltages=(140 160 180 200 220)  # example here
+# ====================== USERS TO-CHECK ======================
+# Things below should not require any major changes.... 
+TARGET_bias_setting=180. 					 # To calculate the effective gain (used to converting from ADC to PE) if bias setting provided
+TARGET_eff_gain=60.      					 # To calculate the bias setting given the targetted effeticve gain. 
+Voltages=(140 160 180 200 220)  			 # example here
+n=5 										 # number of bias settings.
 Data_dir=/data/crt_Aframe_saveme #temporary  # double-check here. 
 #  ====================== END OF USERS TO-CHECK ====================== 
 

@@ -3,4 +3,4 @@ cd   $MRB_BUILDDIR
 
 make install | grep -v "Up-to-date"
 cd
-cd jiaoyang/single_PE_search
+cd /home/nfs/sbnd/Aframe/single_PE_search
