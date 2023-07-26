@@ -306,11 +306,11 @@ void Apply2DStyle(TH2* hist){
   hist->GetXaxis()->SetTitleFont(axis_title_font_x);
   hist->GetYaxis()->SetTitleFont(axis_title_font_y);
   hist->GetZaxis()->SetTitleFont(axis_title_font_z);
-  std::cout<<"PlotStyle:l309"<<std::endl;
+  //std::cout<<"PlotStyle:l309"<<std::endl;
   hist->GetXaxis()->SetTitleSize(axis_title_size_x);
   hist->GetYaxis()->SetTitleSize(axis_title_size_y);
   hist->GetZaxis()->SetTitleSize(axis_title_size_z);
-  std::cout<<"PlotStyle:l312"<<std::endl;
+  //std::cout<<"PlotStyle:l312"<<std::endl;
   hist->GetXaxis()->SetLabelFont(axis_label_font);
   hist->GetYaxis()->SetLabelFont(axis_label_font);
   hist->GetZaxis()->SetLabelFont(axis_label_font);

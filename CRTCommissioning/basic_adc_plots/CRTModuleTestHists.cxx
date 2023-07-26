@@ -21,7 +21,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
   int run;
   bool makeADCplots=true;//false;
-  bool doGainLabels=true;
+  bool doGainLabels=false;
   if(argc==1){
     cout<<"Using Run 4394 as default. Run with argument for other runs. Expects berncrtana file to have name of form bercrt_hist_run[run#].root"<<endl;
     return 0;
@@ -60,15 +60,13 @@ int main(int argc, char* argv[]) {
       gains[run]=stoi( gainstr.substr( indx1+1) );
     }
   }
-
     //TFile* f= new TFile(fname);
   //cout<<"Opened: /sbnd/data/users/afilkins/crts/run4394_thesh300_bernana.root"<<endl;
   TChain* thits=new TChain("berncrtana/hits");//= (TChain*) f->Get("berncrtana/hits");
   //if(run==2100) thits->Add("/sbnd/data/users/afilkins/crts/berncrt_hist_run21*.root");
   //else thits->Add(fname);
   //cout<<"fname: "<< fname<<endl;
-  string topdir=getenv("CRTDIR");
-  if(topdir=="") topdir="/sbnd/data/users/${USER}/crtModTests";
+  string topdir= (getenv("CRTDIR")==NULL)? "/sbnd/data/users/${USER}/crtModTests": getenv("CRTDIR");
   for(int i=0; i<runs.size(); i++){
     TString fname=Form("%s/berncrt_hist_run%d.root", topdir.c_str() , runs[i]);
     thits->Add(fname );
@@ -96,7 +94,6 @@ int main(int argc, char* argv[]) {
   thits->SetBranchAddress("run_start_time", &run_start_time);
 
   TCanvas* c1= new TCanvas;
-  cout<<"hard coding 1st test aframe febs"<<endl;
   
   vector<int> febs;//={153, 154, 155, 156, 157, 158, 159, 181, 182};//{92, 73,75,76,72,71,82};//={87, 193, 88, 85, 81, 80, 79, 89};//{193, 
   map<int, vector<TH1D*>> hadcs, hadcs_flag3;
@@ -137,7 +134,6 @@ int main(int argc, char* argv[]) {
   map<int, vector<double> > sum, sqrs;//, avg, rms;
   //map<int, vector< vector<double>>> evAdcs;
   map<int, vector<int> > nhits;
-  
   if( 0 == system( Form( "test -f %s/febs.csv", dirname.c_str()  ) ) ){
     string febcsvname=dirname+"/febs.csv";
     cout<<"Looking at "<<febcsvname.c_str()<<endl;
@@ -156,9 +152,9 @@ int main(int argc, char* argv[]) {
       catch(std::exception e){ cout<<"Input CSV file doesn't have expected format...Found FEB# "<<febstr.c_str(); break;}
     }
     //cover febs that dont get reconstructed in the other tree
-    int m5Entries=(nentries<100)? nentries: 300;
+    int m5Entries=(nentries<300)? nentries: 300;
+    int step=nentries/m5Entries;
     for(int iEntry=0; iEntry<m5Entries; iEntry++){
-      int step=m5Entries/nentries;
       thits->GetEntry(iEntry* step );
       //try and find all the febs... lets hope thats enough entries
       if(febs.size()==0) febs.push_back( int(mac5) );
@@ -173,10 +169,12 @@ int main(int argc, char* argv[]) {
     }
   }
   else{
-    int m5Entries=(nentries<100)? nentries: 200;
+    int m5Entries=(nentries<300)? nentries: 300;
+    int step=nentries/m5Entries;
     for(int iEntry=0; iEntry<m5Entries; iEntry++){
-      int step=m5Entries/nentries;
+      //cout<<"iEntry: "<<iEntry<<" step: "<<step<<endl;
       thits->GetEntry(iEntry* step );
+      //cout<<"Entry: "<<iEntry*step<<" feb: "<<int(mac5)<<endl;
       //try and find all the febs... lets hope thats enough entries
       if(febs.size()==0) febs.push_back( int(mac5) );
       else{
@@ -192,7 +190,7 @@ int main(int argc, char* argv[]) {
 
   ///I keep missing febs let fix that
   //hard coded febs
-  vector<int>addedfebs= {71, 72, 75, 76, 153, 155, 156,  157,  158,  159, 181, 182, 238};//={181, 71, 72, 73, 75, 76, 157};
+  vector<int>addedfebs= {};//{71, 72, 75, 76, 153, 155, 156,  157,  158,  159, 181, 182, 238};//={181, 71, 72, 73, 75, 76, 157};
   for (int addedfeb : addedfebs){
     bool alreadyInVec=false;
     for(int f=0; f<febs.size(); f++){
@@ -230,7 +228,7 @@ int main(int argc, char* argv[]) {
   cout<<"Starting event loop"<<endl;
   //nentries=250;
   if(nentries>1e6) nentries=1e6;
-  cout<<"Total Number of Entries: "<<nentries<<endl;
+  cout<<"Total Number of Entries Used (max 1e6): "<<nentries<<endl;
   double totRunTime=0;
 
   for(int iEntry=0; iEntry<nentries; iEntry++){
